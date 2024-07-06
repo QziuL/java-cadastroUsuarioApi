@@ -4,12 +4,13 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @Entity
-@Table(name = "tb_user")
+@Table(name = "tb_users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,13 @@ public class User {
     @Column(nullable = false)
     private String confirmPassword;
 
-    private boolean is_admin = false;
+
+    // Definindo a relação de User com Roles, pela tabela intermediária 'tb_users_roles'
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable( name = "tb_users_roles",
+                joinColumns = @JoinColumn(name = "id_user"),
+                inverseJoinColumns = @JoinColumn(name = "id_role"))
+    private List<Role> roles;
 
     public User(String username, String email, String password, String confirmPassword) {
         this.username = username;
@@ -35,4 +42,5 @@ public class User {
         this.password = password;
         this.confirmPassword = confirmPassword;
     }
+
 }
