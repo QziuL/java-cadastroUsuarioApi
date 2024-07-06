@@ -11,7 +11,7 @@ public class UserDTO {
     private String confirmPassword;
 
     public User convertToUser() {
-        return new User(this.username, this.email, this.password, this.confirmPassword);
+        return new User(this.username, this.email, this.password);
     }
 
     public UserDTO getSelf() {
