@@ -25,10 +25,6 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    @Column(nullable = false)
-    private String confirmPassword;
-
-
     // Definindo a relação de User com Roles, pela tabela intermediária 'tb_users_roles'
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable( name = "tb_users_roles",
@@ -36,11 +32,10 @@ public class User {
                 inverseJoinColumns = @JoinColumn(name = "id_role"))
     private List<Role> roles;
 
-    public User(String username, String email, String password, String confirmPassword) {
+    public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
     }
 
 }
