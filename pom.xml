@@ -80,6 +80,12 @@
 			<version>2.6.0</version>
 		</dependency>
 
+		<!-- Jason Web Token (JJWT) -->
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
+			<version>0.12.6</version>
+		</dependency>
 
 	</dependencies>
 
