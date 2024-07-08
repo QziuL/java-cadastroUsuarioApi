@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "security.config")
 public class JwtSecurityConfig {
     public static String PREFIX;
-    public static String TOKEN;
+    public static String KEY;
     public static Long EXPIRATION;
 }
