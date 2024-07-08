@@ -11,7 +11,7 @@ public class JwtObject {
     private Date expiresAt;
     private List<String> roles;
 
-    public void setRoles(String roles) {
-        this.roles = Collections.singletonList(roles);
+    public void setRoles(String... roles) {
+        this.roles = Arrays.asList(roles);
     }
 }
