@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private PasswordEncoder encoder(){ return new BCryptPasswordEncoder(); }
 
     @Override
     public User insert(UserDTO userDTO) {
@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Passwords do not match");
         if(userRepository.findByEmail(userDTO.getEmail()).isPresent())
             throw new IllegalArgumentException("Email already exists");
-        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        userDTO.setPassword(encoder().encode(userDTO.getPassword()));
         return userDTO.convertToUser();
     }
 
