@@ -50,6 +50,7 @@ public class WebSecurityConfig {
                 .addFilterAfter(new JwtFilter(), UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
+                        .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/role").permitAll()
                         .requestMatchers(HttpMethod.GET, "/role").permitAll()
@@ -57,10 +58,11 @@ public class WebSecurityConfig {
                         .requestMatchers(HttpMethod.GET,"/user").hasAnyRole("USER","ADMIN")
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
                         .requestMatchers("/").permitAll().anyRequest().authenticated())
-                .formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/"))
                 .logout(LogoutConfigurer::permitAll)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
+
+        // .formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/"))
     }
 
     @Bean
