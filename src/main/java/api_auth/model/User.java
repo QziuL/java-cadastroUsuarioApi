@@ -28,8 +28,8 @@ public class User {
 
     // Definindo a relação de User com Roles, pela tabela intermediária 'tb_users_roles'
     @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "tab_user_roles", joinColumns = @JoinColumn(name = "user_id"))
-    @Column(name = "role_id")
+    @CollectionTable(name = "tab_user_roles", joinColumns = @JoinColumn(name = "id_user"))
+    @Column(name = "id_role")
     private List<String> roles = new ArrayList<>();
 
     public User(String username, String email, String password, List<String> roles) {
