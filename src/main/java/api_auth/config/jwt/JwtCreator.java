@@ -1,5 +1,6 @@
 package api_auth.config.jwt;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,10 +18,20 @@ public class JwtCreator {
 
     // método para gerar o token
     public static String create(String prefix,String key, JwtObject jwtObject) {
-        String token = Jwts.builder().setSubject(jwtObject.getSubject()).setIssuedAt(jwtObject.getIssuedAt()).setExpiration(jwtObject.getExpiresAt())
-                .claim(ROLES_AUTHORITIES, checkRoles(jwtObject.getRoles())).signWith(SignatureAlgorithm.HS512, key).compact();
+        System.out.println(jwtObject.getRoles());;
+        String token = Jwts.builder()
+                .setSubject(jwtObject.getSubject())
+                .setIssuedAt(jwtObject.getIssuedAt())
+                .setExpiration(jwtObject.getExpiresAt())
+                .claim(ROLES_AUTHORITIES, checkRoles(jwtObject.getRoles()))
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
         return prefix + " " + token;
     }
+    /*
+        ERRO 'DATATYPE CONVERT' LINHA 27
+     */
+
 
     // método para verificação da estrutura de token
     public static JwtObject create(String token, String prefix, String key)
