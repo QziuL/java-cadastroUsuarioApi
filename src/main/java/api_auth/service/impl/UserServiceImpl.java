@@ -28,7 +28,8 @@ public class UserServiceImpl implements UserService {
         if(userRepository.findByEmail(userDTO.getEmail()).isPresent())
             throw new IllegalArgumentException("Email already exists");
         userDTO.setPassword(encoder().encode(userDTO.getPassword()));
-        return userDTO.convertToUser();
+
+        return userRepository.save(userDTO.convertToUser());
     }
 
     @Override
