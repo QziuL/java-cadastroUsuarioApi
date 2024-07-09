@@ -51,19 +51,17 @@ public class WebSecurityConfig {
                 .authorizeHttpRequests(req -> req
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/role").permitAll()
                         .requestMatchers(HttpMethod.GET, "/role").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user").permitAll()
                         .requestMatchers(HttpMethod.GET,"/user").hasAnyRole("USER","ADMIN")
                         .requestMatchers("/admin").hasAnyRole("ADMIN")
                         .requestMatchers("/").permitAll().anyRequest().authenticated())
+                .formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/"))
                 .logout(LogoutConfigurer::permitAll)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
     }
-
-    // .formLogin(form -> form.loginPage("/login").permitAll().defaultSuccessUrl("/"))
 
     @Bean
     public UserDetailsService userDetailsService() {
