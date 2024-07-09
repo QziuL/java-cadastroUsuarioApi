@@ -19,7 +19,6 @@ public class UserController {
     @PostMapping
     public ResponseEntity<User> insertUser(@RequestBody UserDTO userDTO) {
         User userCreated = userService.insert(userDTO);
-        System.out.println(userCreated);
         return new ResponseEntity<>(userCreated, HttpStatus.CREATED);
     }
 
