@@ -38,8 +38,4 @@ public class User {
         this.password = password;
         this.roles = roles;
     }
-
-    /*
-    NAO ESTÁ SALVANDO USUÁRIO NO BANCO H2, VERIFICAR ISSO
-     */
 }
