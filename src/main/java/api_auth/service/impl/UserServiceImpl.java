@@ -10,8 +10,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -39,17 +39,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getById(UUID id) {
-        return null;
+    public User getByEmail(String email) {
+        return userRepository.findByEmail(email).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
-    public User updateById(UUID id) {
-        return null;
-    }
-
-    @Override
-    public boolean deleteById(UUID id) {
-        return false;
+    public User deleteByEmail(String email) {
+        User user = getByEmail(email);
+        if(Objects.isNull(user))
+            throw new NoSuchElementException("User not found.");
+        userRepository.deleteById(user.getId());
+        return user;
     }
 }
