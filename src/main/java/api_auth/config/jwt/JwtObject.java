@@ -10,8 +10,4 @@ public class JwtObject {
     private Date issuedAt;
     private Date expiresAt;
     private List<String> roles;
-
-    public void setRoles(String roles) {
-        this.roles = Collections.singletonList(roles);
-    }
 }

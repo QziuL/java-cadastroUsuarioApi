@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    private Long id;
 
     @Column(nullable = false, length = 255)
     private String username;
@@ -26,16 +27,15 @@ public class User {
     private String password;
 
     // Definindo a relação de User com Roles, pela tabela intermediária 'tb_users_roles'
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable( name = "tb_users_roles",
-                joinColumns = @JoinColumn(name = "id_user"),
-                inverseJoinColumns = @JoinColumn(name = "id_role"))
-    private List<Role> roles;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "tab_user_roles", joinColumns = @JoinColumn(name = "id_user"))
+    @Column(name = "id_role")
+    private List<String> roles = new ArrayList<>();
 
-    public User(String username, String email, String password) {
+    public User(String username, String email, String password, List<String> roles) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.roles = roles;
     }
-
 }
