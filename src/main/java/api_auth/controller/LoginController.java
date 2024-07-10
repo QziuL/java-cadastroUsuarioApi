@@ -47,7 +47,7 @@ public class LoginController {
         jwtObject.setSubject(user.getUsername());
         jwtObject.setIssuedAt(new Date(System.currentTimeMillis()));
         jwtObject.setExpiresAt(new Date(System.currentTimeMillis() + JwtSecurityConfig.EXPIRATION));
-        jwtObject.setRoles(user.getRoles().toString());
+        jwtObject.setRoles(user.getRoles());
 
         // definição dos atributos de SessaoDTO
         sessaoDTO.setLogin(loginDTO.getUsername());
