@@ -17,8 +17,4 @@ public class UserDTO {
     public User convertToUser() {
         return new User(this.username, this.email, this.password, this.roles);
     }
-
-    public UserDTO getSelf() {
-        return this;
-    }
 }
