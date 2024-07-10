@@ -4,20 +4,15 @@ import api_auth.config.jwt.JwtFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -52,11 +47,11 @@ public class WebSecurityConfig {
                         .requestMatchers(SWAGGER_WHITELIST).permitAll()
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/role").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/role").permitAll()
                         .requestMatchers(HttpMethod.POST,"/user").permitAll()
                         .requestMatchers(HttpMethod.GET,"/user").hasAnyRole("USER","ADMIN")
-                        .requestMatchers("/admin").hasAnyRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/user/**").hasAnyRole("USER","ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/user/**").hasRole("ADMIN")
+                        .requestMatchers("/admin").hasRole("ADMIN")
                         .requestMatchers("/").permitAll().anyRequest().authenticated())
                 .logout(LogoutConfigurer::permitAll)
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
